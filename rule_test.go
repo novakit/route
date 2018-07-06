@@ -11,7 +11,7 @@ import (
 func TestRouteHeaderRule_Match(t *testing.T) {
 	r := HeaderRule{Name: "X-Test-Header", Value: []string{"AAA", "BBB"}}
 	req := &http.Request{Header: http.Header{}}
-	c := &nova.Context{Req: req}
+	c := &nova.Context{Req: req, Values: map[string]interface{}{}}
 	c.Req.Header.Set("X-Test-Header", "AAA")
 	if !r.Match(c) {
 		t.Error("header rule failed 1")
@@ -29,7 +29,7 @@ func TestRouteHeaderRule_Match(t *testing.T) {
 func TestRouteHostRule_Match(t *testing.T) {
 	r := HostRule{Host: []string{"host1.landzero.net", "host2.landzero.net"}}
 	req := &http.Request{Host: "host1.landzero.net"}
-	c := &nova.Context{Req: req}
+	c := &nova.Context{Req: req, Values: map[string]interface{}{}}
 	if !r.Match(c) {
 		t.Error("host rule failed 1")
 	}
@@ -46,7 +46,7 @@ func TestRouteHostRule_Match(t *testing.T) {
 func TestRouteMethodRule_Match(t *testing.T) {
 	r := MethodRule{Method: []string{http.MethodGet, http.MethodPost}}
 	req := &http.Request{}
-	c := &nova.Context{Req: req}
+	c := &nova.Context{Req: req, Values: map[string]interface{}{}}
 	c.Req.Method = http.MethodGet
 	if !r.Match(c) {
 		t.Error("method rule failed 1")
@@ -64,7 +64,7 @@ func TestRouteMethodRule_Match(t *testing.T) {
 func TestRoutePathRule_Match(t *testing.T) {
 	r := PathRule{Path: "/hello/world"}
 	req := &http.Request{}
-	c := &nova.Context{Req: req}
+	c := &nova.Context{Req: req, Values: map[string]interface{}{}}
 	c.Req.URL, _ = url.Parse("/hello/world")
 	if !r.Match(c) {
 		t.Error("path rule failed 1")
@@ -118,7 +118,7 @@ func TestRouteRules_Add(t *testing.T) {
 	var r Rules
 	r = r.Add(MethodRule{Method: []string{http.MethodGet, http.MethodPost}})
 	req := &http.Request{}
-	c := &nova.Context{Req: req}
+	c := &nova.Context{Req: req, Values: map[string]interface{}{}}
 	c.Req.Method = http.MethodGet
 	if !r.Match(c) {
 		t.Error("add failed 1")

@@ -12,7 +12,7 @@ const ContextPathParamsKey = "nova.path_params"
 
 // PathParams extract path parameters from nova.Context
 func PathParams(c *nova.Context) (u url.Values) {
-	u, _ = c.Value(ContextPathParamsKey).(url.Values)
+	u, _ = c.Values[ContextPathParamsKey].(url.Values)
 	return
 }
 
@@ -94,7 +94,7 @@ func (r PathRule) Match(c *nova.Context) bool {
 		}
 	}
 	// assign path params
-	c.Set(ContextPathParamsKey, pp)
+	c.Values[ContextPathParamsKey] = pp
 	return true
 }
 
