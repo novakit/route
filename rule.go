@@ -8,7 +8,7 @@ import (
 )
 
 // ContextPathParamsKey key for path params in request.Context()
-const ContextPathParamsKey = "nova.path_params"
+const ContextPathParamsKey = "_path_params"
 
 // PathParams extract path parameters from nova.Context
 func PathParams(c *nova.Context) (u url.Values) {
