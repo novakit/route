@@ -73,7 +73,7 @@ func (h Router) Use(handlers ...nova.HandlerFunc) Router {
 		handler := handler0
 		h.Nova.Use(func(c *nova.Context) (err error) {
 			if h.Rules.Match(c) {
-				handler(c)
+				err = handler(c)
 			} else {
 				c.Next()
 			}
